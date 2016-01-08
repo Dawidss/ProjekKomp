@@ -91,7 +91,7 @@ public final class Formula{
             if(formulaTab1.length()<=2)continue;
             for(String opr1: opr){
                 System.out.println(opr1+" operator formula="+formulaTab1+formulaTab1.matches("(?).*"+opr1+".*"));
-                if(formulaTab1.matches("(?).*"+opr1+".*"))
+                if(formulaTab1.matches("(?).+["+opr1+"].+"))
                    return true;
             }
         }
