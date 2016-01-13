@@ -81,7 +81,7 @@ public class JGraph
             LinkedList<Formula> poziomy2=(LinkedList<Formula>)lista.get(i+1);
             for(int j=0;j<poziomy1.size();j++)
             {
-                String a=poziomy1.get(j).getFormula()+"["+poziomy1.get(j).getNR()+"]";
+                String a=poziomy1.get(j).getFormula()+poziomy1.get(j).getNR();
                 g.addVertex(a);
                 for(Iterator it=poziomy2.iterator();it.hasNext();)
                 {
@@ -90,7 +90,7 @@ public class JGraph
                     if(poziomy1.get(j).getNR()==formula.getRodzic())
                     {
                         
-                        String b=formula.getFormula()+"["+formula.getNR()+"]";
+                        String b=formula.getFormula()+formula.getNR();
                         g.addVertex(b);
                         g.addEdge(a,b);
                         
@@ -100,12 +100,11 @@ public class JGraph
             }
             
         }
-        jgxAdapter.setKeepEdgesInBackground(true);
         mxCompactTreeLayout layout = new mxCompactTreeLayout(jgxAdapter);
         layout.setHorizontal(false);
         layout.setMoveTree(true);
         layout.setEdgeRouting(false);
-        layout.setNodeDistance(40);
+        layout.setNodeDistance(50);
         layout.execute(jgxAdapter.getDefaultParent());
         
 

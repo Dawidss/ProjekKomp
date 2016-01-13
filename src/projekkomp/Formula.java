@@ -14,7 +14,7 @@ public final class Formula{
     private final int rodzic;
     private final int nr;
     private boolean dekomponowac;
-    
+
 
     public Formula(String formula,int nr, int rodzic) {
         this.dekomponowac = false;
