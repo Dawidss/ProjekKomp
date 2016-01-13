@@ -23,7 +23,7 @@ public class Test {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        String formula="(((~(((p|q))&p))|p)|p)&q";
+        String formula="(~(p<->q))<->p";
         Formula root= new Formula(formula,0,0);
         poziom.add(root);
         drzewo.add(poziom);
@@ -136,14 +136,11 @@ public class Test {
         System.out.println("tu doszedlem"+operator);
         String[] operDek=Operatory.getOprDek();
         if(operator.equals(operDek[0])){
-            System.out.println("dziele tym symbolem &");
             subFormula+=f.substring(0, oper.getIndexDek());
             subFormula=redukcjaN(subFormula);
             subFormula+=";"+f.substring(oper.getIndexDek()+operator.length(),f.length());
-            System.out.println("dobrze podzielilem ide dalej");
             newFormula= new String[1];
-           System.out.println(subFormula+"  nowa formula");
-           newFormula[0]=subFormula;
+            newFormula[0]=subFormula;
         }
         else if(operator.equals(operDek[1])){
             newFormula=new String[2];
@@ -160,23 +157,42 @@ public class Test {
             newFormula[1]=redukcjaN(newFormula[1]);
         }
         else if(operator.equals(operDek[3])){
-            System.out.println("tu robie bledy");
             subFormula="~"+f.substring(0, oper.getIndexDek());
             subFormula+=";~"+f.substring(oper.getIndexDek()+operator.length()-1,f.length());
             newFormula= new String[1];
-            System.out.println(subFormula+"  nowa formula");
             newFormula[0]=subFormula;
         }
         else if(operator.equals(operDek[4])){
+            newFormula=new String[2];
+            newFormula[0]="~"+f.substring(0, oper.getIndexDek());
+            newFormula[1]=f.substring(oper.getIndexDek()+operator.length(), f.length());
+            newFormula[1]=redukcjaN(newFormula[1]);
             
         }
         else if(operator.equals(operDek[5])){
+            subFormula+=f.substring(0, oper.getIndexDek());
+            subFormula=redukcjaN(subFormula);
+            subFormula+=";~"+f.substring(oper.getIndexDek()+operator.length()-1,f.length());
+            newFormula= new String[1];
+            newFormula[0]=subFormula;
             
         }
         else if(operator.equals(operDek[6])){
-            
+            newFormula=new String[2];
+            String formulaL,formulaP;
+            formulaL=f.substring(0, oper.getIndexDek());
+            formulaP=f.substring(oper.getIndexDek()+operator.length(), f.length());
+            newFormula[0]=redukcjaN(formulaL)+";"+redukcjaN(formulaP);
+            newFormula[1]="~"+formulaL+";~"+formulaP;
+            System.out.println("dziele albo nie dziele");
         }
         else if(operator.equals(operDek[7])){
+            newFormula=new String[2];
+            String formulaL,formulaP;
+            formulaL=f.substring(0, oper.getIndexDek());
+            formulaP=f.substring(oper.getIndexDek()+operator.length()-1, f.length());
+            newFormula[0]=redukcjaN(formulaL)+";~"+formulaP;
+            newFormula[1]="~"+formulaL+";"+redukcjaN(formulaP);
             
         }
        if(formulaTab.length>1){
@@ -184,7 +200,6 @@ public class Test {
                if(k!=i){
                    for(int j=0;j<newFormula.length;j++)
                    {
-                       System.out.println("scalam formule ++++ "+formulaTab[k]+"  ++++++++ ");
                        newFormula[j]+=";"+formulaTab[k];
                    }   
                }
